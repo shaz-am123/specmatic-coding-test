@@ -22,9 +22,7 @@ class ProductService(private val productRepository: ProductRepository) {
     fun getProducts(type: String?): List<Product> {
         return if (type != null) {
             getProductsByType(type)
-        } else {
-            getAllProducts()
-        }
+        } else getAllProducts()
     }
 
     private fun getAllProducts(): List<Product> = productRepository.findAll()

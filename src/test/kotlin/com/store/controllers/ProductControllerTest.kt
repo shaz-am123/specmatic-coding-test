@@ -34,8 +34,8 @@ class ProductControllerTest {
 
     @Test
     fun `should return list of products when getProducts is called`() {
-        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100))
-        val product2 = Product(ProductId(2), ProductRequest("Bread", "food", 200))
+        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, 1000))
+        val product2 = Product(ProductId(2), ProductRequest("Bread", "food", 200, 20))
 
         `when`(productService.getProducts(null)).thenReturn(listOf(product1, product2))
 
@@ -46,7 +46,7 @@ class ProductControllerTest {
 
     @Test
     fun `should return list of products when getProducts is called with type`() {
-        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100))
+        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, 1000))
 
         `when`(productService.getProducts("gadget")).thenReturn(listOf(product1))
 
@@ -57,7 +57,7 @@ class ProductControllerTest {
 
     @Test
     fun `should return created product ID when createProduct is called`() {
-        val productRequest = ProductRequest("Iphone", "gadget", 100)
+        val productRequest = ProductRequest("Iphone", "gadget", 100, 1000)
         val createdProductId = ProductId(3)
         `when`(productService.createProduct(productRequest)).thenReturn(createdProductId)
 

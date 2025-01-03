@@ -10,12 +10,16 @@ data class ProductRequest(
     val type: String,
 
     @JsonProperty("inventory")
-    val inventory: Int
+    val inventory: Int,
+
+    @JsonProperty("cost")
+    val cost: Int
 ) {
     init {
         validateName()
         validateType()
         validateInventory()
+        validateCost()
     }
 
     private fun validateName() {
@@ -32,6 +36,10 @@ data class ProductRequest(
 
     private fun validateInventory() {
         require(inventory in 1..9999) { "Inventory must be between 1 and 9999." }
+    }
+
+    private fun validateCost() {
+        require(cost >= 1) { "Cost of product can not be less than 1." }
     }
 
     companion object {
