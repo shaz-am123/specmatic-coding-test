@@ -27,7 +27,7 @@ data class ProductRequest(
     private fun validateType() {
         require(type.isNotBlank()) { "Type must not be blank." }
         val validTypes = setOf("gadget", "food", "book", "other")
-        require(validTypes.contains(type)){"Type must be one of the following: gadget, food, book, other."}
+        require(validTypes.contains(type)) { "Type must be one of the following: gadget, food, book, other." }
     }
 
     private fun validateInventory() {

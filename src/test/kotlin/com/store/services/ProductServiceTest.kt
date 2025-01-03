@@ -88,7 +88,7 @@ class ProductServiceTest {
     }
 
     @Test
-    fun `getProducts should throw an error if the type is invalid`(){
-        assertThrows<IllegalArgumentException>{productService.getProducts("invalid")}
+    fun `getProducts should throw an error if the type is invalid`() {
+        assertThrows<IllegalArgumentException> { productService.getProducts("invalid") }
     }
 }
