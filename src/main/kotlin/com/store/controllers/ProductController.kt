@@ -4,10 +4,10 @@ import com.store.domain.Product
 import com.store.dto.ProductRequest
 import com.store.domain.ProductId
 import com.store.services.ProductService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import jakarta.validation.Valid
 
 @RestController
 @RequestMapping("/products")
@@ -22,7 +22,7 @@ open class ProductController(private val productService: ProductService) {
 
     @PostMapping
     fun createProduct(
-        @RequestBody @Valid productRequest: ProductRequest
+        @Valid @RequestBody productRequest: ProductRequest
     ): ResponseEntity<ProductId> {
         val productId = productService.createProduct(productRequest)
         return ResponseEntity.status(HttpStatus.CREATED).body(productId)

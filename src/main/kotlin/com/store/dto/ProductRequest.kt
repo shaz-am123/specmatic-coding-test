@@ -1,48 +1,33 @@
 package com.store.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.store.validation.annotations.NotBoolean
+import jakarta.validation.constraints.*
 
 data class ProductRequest(
+    @field:NotBlank(message = "Name must not be blank.")
+    @field:NotBoolean(message = "Name cannot be a boolean value")
+    @field:Pattern(
+        regexp = "^[A-Za-z '-]+$",
+        message = "Name must only contain alphabets (A-Z, a-z), spaces, hyphens, or apostrophes."
+    )
     @JsonProperty("name")
     val name: String,
 
+    @field:NotBlank(message = "Type must not be blank.")
+    @field:Pattern(
+        regexp = "^(gadget|food|book|other)$",
+        message = "Type must be one of the following: gadget, food, book, other."
+    )
     @JsonProperty("type")
     val type: String,
 
+    @field:Min(value = 1, message = "Inventory must be at least 1.")
+    @field:Max(value = 9999, message = "Inventory must not exceed 9999.")
     @JsonProperty("inventory")
     val inventory: Int,
 
+    @field:Min(value = 1, message = "Cost of product can not be less than 1.")
     @JsonProperty("cost")
     val cost: Int
-) {
-    init {
-        validateName()
-        validateType()
-        validateInventory()
-        validateCost()
-    }
-
-    private fun validateName() {
-        require(name.isNotBlank()) { "Name must not be blank." }
-        require(name != "true" && name != "false") { "Name cannot be a boolean value." }
-        require(NAME_REGEX.matches(name)) { "Name must only contain alphabets (A-Z, a-z), spaces, hyphens, or apostrophes." }
-    }
-
-    private fun validateType() {
-        require(type.isNotBlank()) { "Type must not be blank." }
-        val validTypes = setOf("gadget", "food", "book", "other")
-        require(validTypes.contains(type)) { "Type must be one of the following: gadget, food, book, other." }
-    }
-
-    private fun validateInventory() {
-        require(inventory in 1..9999) { "Inventory must be between 1 and 9999." }
-    }
-
-    private fun validateCost() {
-        require(cost >= 1) { "Cost of product can not be less than 1." }
-    }
-
-    companion object {
-        private val NAME_REGEX = "^[A-Za-z '-]+$".toRegex()
-    }
-}
+)
