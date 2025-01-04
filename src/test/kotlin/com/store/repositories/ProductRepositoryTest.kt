@@ -1,5 +1,6 @@
 package com.store.repositories
 
+import com.store.builders.ProductDefaultBuilder
 import com.store.domain.Product
 import com.store.enums.ProductType
 import org.junit.jupiter.api.BeforeEach
@@ -19,9 +20,9 @@ class ProductRepositoryTest {
 
     @Test
     fun `test save and findAll`() {
-        val product1 = Product(1, "Iphone", ProductType.gadget, 100, BigDecimal("1000"))
-        val product2 = Product(2, "Macbook", ProductType.gadget, 150, BigDecimal("1000"))
-        val product3 = Product(3, "Bread", ProductType.food, 150, BigDecimal("20"))
+        val product1 = ProductDefaultBuilder().build()
+        val product2 = ProductDefaultBuilder().id(2).name("Macbook").build()
+        val product3 = ProductDefaultBuilder().id(3).name("Bread").type(ProductType.food).build()
         productRepository.save(product1)
         productRepository.save(product2)
         productRepository.save(product3)
@@ -35,9 +36,9 @@ class ProductRepositoryTest {
 
     @Test
     fun `test findByType returns products of the given type`() {
-        val product1 = Product(1, "Iphone", ProductType.gadget, 100, BigDecimal("1000"))
-        val product2 = Product(2, "Macbook", ProductType.gadget, 150, BigDecimal("1000"))
-        val product3 = Product(3, "Bread", ProductType.food, 150, BigDecimal("20"))
+        val product1 = ProductDefaultBuilder().build()
+        val product2 = ProductDefaultBuilder().id(2).name("Macbook").build()
+        val product3 = ProductDefaultBuilder().id(3).name("Bread").type(ProductType.food).build()
         productRepository.save(product1)
         productRepository.save(product2)
         productRepository.save(product3)
@@ -50,9 +51,9 @@ class ProductRepositoryTest {
 
     @Test
     fun `test findByType returns empty list if no matching type found`() {
-        val product1 = Product(1, "Iphone", ProductType.gadget, 100, BigDecimal("1000"))
-        val product2 = Product(2, "Macbook", ProductType.gadget, 150, BigDecimal("1000"))
-        val product3 = Product(3, "Bread", ProductType.food, 150, BigDecimal("20"))
+        val product1 = ProductDefaultBuilder().build()
+        val product2 = ProductDefaultBuilder().id(2).name("Macbook").build()
+        val product3 = ProductDefaultBuilder().id(3).name("Bread").type(ProductType.food).build()
         productRepository.save(product1)
         productRepository.save(product2)
         productRepository.save(product3)
@@ -81,8 +82,8 @@ class ProductRepositoryTest {
 
     @Test
     fun `test save overwrites product with same ID`() {
-        val product1 = Product(1, "Iphone", ProductType.gadget, 100, BigDecimal("1000"))
-        val product2 = Product(1, "Iphone Pro", ProductType.gadget, 150, BigDecimal("1000"))
+        val product1 = ProductDefaultBuilder().build()
+        val product2 = ProductDefaultBuilder().name("Iphone pro").build()
 
         productRepository.save(product1)
         productRepository.save(product2)

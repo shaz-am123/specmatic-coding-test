@@ -1,8 +1,9 @@
 package com.store.services
 
+import com.store.builders.ProductDefaultBuilder
+import com.store.builders.ProductRequestDefaultBuilder
 import com.store.domain.Product
 import com.store.domain.ProductId
-import com.store.dto.ProductRequest
 import com.store.enums.ProductType
 import com.store.repositories.ProductRepository
 import org.junit.jupiter.api.BeforeEach
@@ -14,7 +15,6 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.junit.jupiter.api.extension.ExtendWith
-import java.math.BigDecimal
 
 @ExtendWith(MockitoExtension::class)
 class ProductServiceTest {
@@ -32,7 +32,7 @@ class ProductServiceTest {
 
     @Test
     fun `createProduct should save product and return productId`() {
-        val productRequest = ProductRequest("Iphone", "gadget", 100, BigDecimal("1000"))
+        val productRequest = ProductRequestDefaultBuilder().build()
         val productId = ProductId(1)
         val newProduct = Product(productId, productRequest)
         doNothing().`when`(productRepository).save(newProduct)
@@ -45,8 +45,8 @@ class ProductServiceTest {
 
     @Test
     fun `getProducts should return all products when no type is specified`() {
-        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, BigDecimal("1000")))
-        val product2 = Product(ProductId(2), ProductRequest("Bread", "food", 150, BigDecimal("20")))
+        val product1 = ProductDefaultBuilder().build()
+        val product2 = ProductDefaultBuilder().id(2).name("bread").type(ProductType.food).build()
         `when`(productRepository.findAll()).thenReturn(listOf(product1, product2))
 
         val result = productService.getProducts(null)
@@ -58,9 +58,9 @@ class ProductServiceTest {
 
     @Test
     fun `getProducts should return filtered products by type`() {
-        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, BigDecimal("1000")))
-        val product2 = Product(ProductId(2), ProductRequest("Macbook", "gadget", 150, BigDecimal("1000")))
-        val product3 = Product(ProductId(3), ProductRequest("Bread", "food", 150, BigDecimal("20")))
+        val product1 = ProductDefaultBuilder().build()
+        val product2 = ProductDefaultBuilder().id(2).name("Macbook").build()
+        val product3 = ProductDefaultBuilder().id(3).name("bread").type(ProductType.food).build()
         `when`(productRepository.findByType(ProductType.gadget)).thenReturn(listOf(product1, product2))
         `when`(productRepository.findByType(ProductType.food)).thenReturn(listOf(product3))
 
