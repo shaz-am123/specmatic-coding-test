@@ -14,6 +14,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.junit.jupiter.api.extension.ExtendWith
+import java.math.BigDecimal
 
 @ExtendWith(MockitoExtension::class)
 class ProductServiceTest {
@@ -31,7 +32,7 @@ class ProductServiceTest {
 
     @Test
     fun `createProduct should save product and return productId`() {
-        val productRequest = ProductRequest("Iphone", "gadget", 100, 1000)
+        val productRequest = ProductRequest("Iphone", "gadget", 100, BigDecimal("1000"))
         val productId = ProductId(1)
         val newProduct = Product(productId, productRequest)
         doNothing().`when`(productRepository).save(newProduct)
@@ -44,8 +45,8 @@ class ProductServiceTest {
 
     @Test
     fun `getProducts should return all products when no type is specified`() {
-        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, 1000))
-        val product2 = Product(ProductId(2), ProductRequest("Bread", "food", 150, 20))
+        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, BigDecimal("1000")))
+        val product2 = Product(ProductId(2), ProductRequest("Bread", "food", 150, BigDecimal("20")))
         `when`(productRepository.findAll()).thenReturn(listOf(product1, product2))
 
         val result = productService.getProducts(null)
@@ -57,9 +58,9 @@ class ProductServiceTest {
 
     @Test
     fun `getProducts should return filtered products by type`() {
-        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, 1000))
-        val product2 = Product(ProductId(2), ProductRequest("Macbook", "gadget", 150, 1000))
-        val product3 = Product(ProductId(3), ProductRequest("Bread", "food", 150, 20))
+        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, BigDecimal("1000")))
+        val product2 = Product(ProductId(2), ProductRequest("Macbook", "gadget", 150, BigDecimal("1000")))
+        val product3 = Product(ProductId(3), ProductRequest("Bread", "food", 150, BigDecimal("20")))
         `when`(productRepository.findByType(ProductType.gadget)).thenReturn(listOf(product1, product2))
         `when`(productRepository.findByType(ProductType.food)).thenReturn(listOf(product3))
 

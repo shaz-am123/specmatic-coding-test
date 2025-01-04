@@ -32,7 +32,7 @@ paths:
                       name: 'XYZ Phone'
                       type: 'gadget'
                       inventory: 2
-                      cost: 1000
+                      cost: 1000.00
         "400":
           description: Bad Request
           content:
@@ -52,7 +52,7 @@ paths:
                   name: iPhone
                   type: gadget
                   inventory: 100
-                  cost: 1000
+                  cost: 1000.00
       responses:
         "201":
           description: POST /products
@@ -86,8 +86,12 @@ components:
           minimum: 1
           maximum: 9999
         cost:
-          type: integer
-          minimum: 1
+          type: number
+          format: float
+          minimum: 0
+          multipleOf: 0.01
+          example: 10.99
+          description: "Product cost (minimum 0, maximum 2 decimal places)"
       required:
         - name
         - type

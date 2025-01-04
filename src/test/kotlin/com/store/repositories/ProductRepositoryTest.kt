@@ -5,6 +5,7 @@ import com.store.enums.ProductType
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
+import java.math.BigDecimal
 import kotlin.test.assertEquals
 
 class ProductRepositoryTest {
@@ -18,9 +19,9 @@ class ProductRepositoryTest {
 
     @Test
     fun `test save and findAll`() {
-        val product1 = Product(1, "Iphone", ProductType.gadget, 100, 1000)
-        val product2 = Product(2, "Macbook", ProductType.gadget, 150, 1000)
-        val product3 = Product(3, "Bread", ProductType.food, 150, 20)
+        val product1 = Product(1, "Iphone", ProductType.gadget, 100, BigDecimal("1000"))
+        val product2 = Product(2, "Macbook", ProductType.gadget, 150, BigDecimal("1000"))
+        val product3 = Product(3, "Bread", ProductType.food, 150, BigDecimal("20"))
         productRepository.save(product1)
         productRepository.save(product2)
         productRepository.save(product3)
@@ -34,9 +35,9 @@ class ProductRepositoryTest {
 
     @Test
     fun `test findByType returns products of the given type`() {
-        val product1 = Product(1, "Iphone", ProductType.gadget, 100, 1000)
-        val product2 = Product(2, "Macbook", ProductType.gadget, 150, 1000)
-        val product3 = Product(3, "Bread", ProductType.food, 150, 20)
+        val product1 = Product(1, "Iphone", ProductType.gadget, 100, BigDecimal("1000"))
+        val product2 = Product(2, "Macbook", ProductType.gadget, 150, BigDecimal("1000"))
+        val product3 = Product(3, "Bread", ProductType.food, 150, BigDecimal("20"))
         productRepository.save(product1)
         productRepository.save(product2)
         productRepository.save(product3)
@@ -49,9 +50,9 @@ class ProductRepositoryTest {
 
     @Test
     fun `test findByType returns empty list if no matching type found`() {
-        val product1 = Product(1, "Iphone", ProductType.gadget, 100, 1000)
-        val product2 = Product(2, "Macbook", ProductType.gadget, 150, 1000)
-        val product3 = Product(3, "Bread", ProductType.food, 150, 20)
+        val product1 = Product(1, "Iphone", ProductType.gadget, 100, BigDecimal("1000"))
+        val product2 = Product(2, "Macbook", ProductType.gadget, 150, BigDecimal("1000"))
+        val product3 = Product(3, "Bread", ProductType.food, 150, BigDecimal("20"))
         productRepository.save(product1)
         productRepository.save(product2)
         productRepository.save(product3)
@@ -65,7 +66,7 @@ class ProductRepositoryTest {
     fun `test concurrent access to repository`() {
         val threads = (1..100).map { id ->
             Thread {
-                productRepository.save(Product(id, "Product$id", ProductType.gadget, 150, 1000))
+                productRepository.save(Product(id, "Product$id", ProductType.gadget, 150, BigDecimal("1000")))
             }
         }
 
@@ -80,8 +81,8 @@ class ProductRepositoryTest {
 
     @Test
     fun `test save overwrites product with same ID`() {
-        val product1 = Product(1, "Iphone", ProductType.gadget, 100, 1000)
-        val product2 = Product(1, "Iphone Pro", ProductType.gadget, 150, 1000)
+        val product1 = Product(1, "Iphone", ProductType.gadget, 100, BigDecimal("1000"))
+        val product2 = Product(1, "Iphone Pro", ProductType.gadget, 150, BigDecimal("1000"))
 
         productRepository.save(product1)
         productRepository.save(product2)

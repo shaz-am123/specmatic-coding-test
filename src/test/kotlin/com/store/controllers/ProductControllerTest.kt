@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import java.math.BigDecimal
 
 @SpringBootTest
 class ProductControllerTest {
@@ -25,7 +26,7 @@ class ProductControllerTest {
     @MockBean
     lateinit var productService: ProductService
 
-    lateinit var mockMvc: MockMvc
+    private lateinit var mockMvc: MockMvc
 
     @BeforeEach
     fun setUp() {
@@ -34,8 +35,8 @@ class ProductControllerTest {
 
     @Test
     fun `should return list of products when getProducts is called`() {
-        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, 1000))
-        val product2 = Product(ProductId(2), ProductRequest("Bread", "food", 200, 20))
+        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, BigDecimal("1000")))
+        val product2 = Product(ProductId(2), ProductRequest("Bread", "food", 200, BigDecimal("20")))
 
         `when`(productService.getProducts(null)).thenReturn(listOf(product1, product2))
 
@@ -46,7 +47,7 @@ class ProductControllerTest {
 
     @Test
     fun `should return list of products when getProducts is called with type`() {
-        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, 1000))
+        val product1 = Product(ProductId(1), ProductRequest("Iphone", "gadget", 100, BigDecimal("1000")))
 
         `when`(productService.getProducts("gadget")).thenReturn(listOf(product1))
 
@@ -57,7 +58,7 @@ class ProductControllerTest {
 
     @Test
     fun `should return created product ID when createProduct is called`() {
-        val productRequest = ProductRequest("Iphone", "gadget", 100, 1000)
+        val productRequest = ProductRequest("Iphone", "gadget", 100, BigDecimal("1000"))
         val createdProductId = ProductId(3)
         `when`(productService.createProduct(productRequest)).thenReturn(createdProductId)
 

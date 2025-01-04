@@ -3,6 +3,7 @@ package com.store.dto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.store.validation.annotations.NotBoolean
 import jakarta.validation.constraints.*
+import java.math.BigDecimal
 
 data class ProductRequest(
     @field:NotBlank(message = "Name must not be blank.")
@@ -27,7 +28,12 @@ data class ProductRequest(
     @JsonProperty("inventory")
     val inventory: Int,
 
-    @field:Min(value = 1, message = "Cost of product can not be less than 1.")
+    @field:DecimalMin(value = "0", message = "Cost of product can not be less than 0")
+    @field:Digits(
+        integer = Int.MAX_VALUE,
+        fraction = 2,
+        message = "Cost of product can not have more than 2 decimal digits"
+    )
     @JsonProperty("cost")
-    val cost: Int
+    val cost: BigDecimal
 )
