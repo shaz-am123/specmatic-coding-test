@@ -106,4 +106,81 @@ class ProductControllerTest {
         )
             .andExpect(status().isBadRequest)
     }
+
+    @Test
+    fun `should return bad request when createProduct is called with invalid type`() {
+        val invalidProductRequest = """
+    {
+        "name": "iPhone",
+        "type": "invalid_type",
+        "inventory": 100
+    }
+    """
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/products")
+                .contentType("application/json")
+                .content(invalidProductRequest)
+        )
+            .andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `should return bad request when createProduct is called with negative inventory`() {
+        val invalidProductRequest = """
+    {
+        "name": "iPhone",
+        "type": "gadget",
+        "inventory": -1
+    }
+    """
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/products")
+                .contentType("application/json")
+                .content(invalidProductRequest)
+        )
+            .andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `should return empty list when no products match the type filter`() {
+        `when`(productService.getProducts("non_existent_type")).thenReturn(emptyList())
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/products?type=non_existent_type"))
+            .andExpect(status().isOk)
+            .andExpect(content().json("[]"))
+    }
+
+    @Test
+    fun `should return bad request when createProduct is called with malformed JSON`() {
+        val malformedJson = "{"
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/products")
+                .contentType("application/json")
+                .content(malformedJson)
+        )
+            .andExpect(status().isBadRequest)
+    }
+
+    @Test
+    fun `should verify content type header is application-json for createProduct`() {
+        val productRequest = ProductRequestDefaultBuilder().build()
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/products")
+                .content(objectMapper.writeValueAsString(productRequest))
+        )
+            .andExpect(status().isUnsupportedMediaType)
+    }
+
+    @Test
+    fun `should return bad request when createProduct is called with empty request body`() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/products")
+                .contentType("application/json")
+        )
+            .andExpect(status().isBadRequest)
+    }
 }
