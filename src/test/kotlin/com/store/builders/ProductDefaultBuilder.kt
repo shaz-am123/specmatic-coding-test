@@ -18,7 +18,7 @@ class ProductDefaultBuilder {
     fun type(type: ProductType) = apply { this.type = type }
 
     fun build(): Product {
-        val productRequest = ProductRequest(name, type.toString(), inventory, cost)
+        val productRequest = ProductRequest(name, type, inventory, cost)
         return Product(id, productRequest)
     }
 }

@@ -1,8 +1,8 @@
 package com.store.controllers
 
 import com.store.domain.Product
-import com.store.dto.ProductRequest
 import com.store.domain.ProductId
+import com.store.dto.ProductRequest
 import com.store.services.ProductService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus

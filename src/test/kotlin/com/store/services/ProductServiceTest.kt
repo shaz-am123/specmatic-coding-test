@@ -6,15 +6,15 @@ import com.store.domain.Product
 import com.store.domain.ProductId
 import com.store.enums.ProductType
 import com.store.repositories.ProductRepository
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.Mockito.*
 import org.mockito.junit.jupiter.MockitoExtension
-import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockitoExtension::class)
 class ProductServiceTest {

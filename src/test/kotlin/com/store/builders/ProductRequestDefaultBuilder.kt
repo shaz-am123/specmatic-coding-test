@@ -1,11 +1,12 @@
 package com.store.builders
 
 import com.store.dto.ProductRequest
+import com.store.enums.ProductType
 import java.math.BigDecimal
 
 class ProductRequestDefaultBuilder {
     private var name: String = "Iphone"
-    private var type: String = "gadget"
+    private var type: ProductType = ProductType.gadget
     private var inventory: Int = 100
     private var cost: BigDecimal = BigDecimal("1000")
 

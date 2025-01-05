@@ -14,7 +14,7 @@ data class Product(
     constructor(productId: ProductId, productRequest: ProductRequest) : this(
         id = productId.id,
         name = productRequest.name,
-        type = ProductType.valueOf(productRequest.type),
+        type = productRequest.type,
         inventory = productRequest.inventory,
         cost = productRequest.cost
     )

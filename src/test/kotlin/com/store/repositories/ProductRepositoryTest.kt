@@ -3,9 +3,9 @@ package com.store.repositories
 import com.store.builders.ProductDefaultBuilder
 import com.store.domain.Product
 import com.store.enums.ProductType
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.assertj.core.api.Assertions.assertThat
 import java.math.BigDecimal
 import kotlin.test.assertEquals
 

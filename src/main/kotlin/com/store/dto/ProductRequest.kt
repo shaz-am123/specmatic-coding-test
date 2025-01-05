@@ -1,6 +1,7 @@
 package com.store.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.store.enums.ProductType
 import com.store.validation.annotations.NotBoolean
 import jakarta.validation.constraints.*
 import java.math.BigDecimal
@@ -15,13 +16,9 @@ data class ProductRequest(
     @JsonProperty("name")
     val name: String,
 
-    @field:NotBlank(message = "Type must not be blank.")
-    @field:Pattern(
-        regexp = "^(gadget|food|book|other)$",
-        message = "Type must be one of the following: gadget, food, book, other."
-    )
+    @field:NotNull(message = "Type must not be null.")
     @JsonProperty("type")
-    val type: String,
+    val type: ProductType,
 
     @field:Min(value = 1, message = "Inventory must be at least 1.")
     @field:Max(value = 9999, message = "Inventory must not exceed 9999.")
